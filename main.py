@@ -6,7 +6,7 @@ import time
 
 # Function to extract data from parsed HTML and write to CSV
 def extract_data_and_write_to_csv(parsed_html):
-    base_dir = '/Users/Afiffauzi/Documents/Code/beautiful-remboelan'
+    base_dir = '/Users/****/Documents/Code/beautiful-remboelan'
     output_csv_file_path = os.path.join(base_dir, 'menu.csv')
 
     with open(output_csv_file_path, 'a', newline='') as output_csv_file:
@@ -22,6 +22,11 @@ def main():
     base_url = 'https://remboelan.com/menu/{}'
     page_number = 1
     while True:
+        # Skip page 3 as it is empty. Hardcoded for now
+        if page_number == 3:
+            page_number += 1
+            continue
+        
         url = base_url.format(page_number)
         response = requests.get(url)
         soup = BeautifulSoup(response.text, 'html.parser')
